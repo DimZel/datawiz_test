@@ -17,6 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 MAIN_TEMPLATES_DIR = os.path.join(BASE_DIR, 'main/templates')
 LOGIN_TEMPLATES_DIR = os.path.join(BASE_DIR, 'login/templates')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 
@@ -125,4 +126,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [STATIC_DIR, ]
+STATICFILES_DIRS = []
