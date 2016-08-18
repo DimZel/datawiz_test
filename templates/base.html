@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Datawiz test</title>
+    <!-- Bootstrap core CSS -->
+{#    <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">#}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar navbar-light bg-faded navbar-fixed-top">
+        {% block userdata %}{% endblock %}
+    </div>
+    <!-- Main content -->
+    <div class="container">
+        {% block login %}{% endblock %}
+        {% block data %}{% endblock %}
+    </div>
+    <!-- Footer -->
+    <div class="footer">
+        &nbsp;
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min\
+        .js"><\/script>');
+    </script>
+    <script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js">
+    </script>
+    <script src="{% static 'js/refresh_data.js' %}"></script>
+</body>
+</html>

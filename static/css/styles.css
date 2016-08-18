@@ -1,0 +1,46 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+    border: 0;
+}
+
+footer {
+    margin: 50px 0;
+}
+
+.table thead th {
+     vertical-align: middle;
+}
+
+.increase thead {
+    background-color: #dff0d8;
+    border-color: #d0e9c6;
+    color: #3c763d;
+}
+
+.decrease thead {
+    background-color: #f2dede;
+    border-color: #ebcccc;
+    color: #a94442;
+}
+
+.table {
+    table-layout: fixed;
+    overflow: auto;
+    margin-bottom: 0;
+}
+
+.err {
+    color: #f42934;
+}

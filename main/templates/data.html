@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block userdata %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <b>{{ client.name }}</b>
+        </div>
+        <div class="col-md-3">
+            Дата первого чека: {{ client.date_from|date }}
+        </div>
+        <div class="col-md-3">
+            Дата последнего чека: {{ client.date_to|date }}
+        </div>
+        <div class="col-md-3 text-warning" id="refreshing_msg" style="display: none">
+            Обновляется...
+        </div>
+        <a class="btn btn-secondary pull-md-right" href="{% url 'logout' %}">
+            Выйти
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block data %}
+<div id="data">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Основные показатели</h3>
+            <table class="table table-bordered table-sm">
+                <thead>
+                <th>Показатель</th>
+                <th><input type="date" class="form-control" id="date_to"
+                           value="{{ date_to|date:"Y-m-d" }}"
+                           min="{{ client.date_from|date:"Y-m-d" }}"
+                           max="{{ client.date_to|date:"Y-m-d" }}"
+                           onchange="refresh_data()"></th>
+                <th><input type="date" class="form-control" id="date_from"
+                           value="{{ date_from|date:"Y-m-d" }}"
+                           min="{{ client.date_from|date:"Y-m-d" }}"
+                           max="{{ client.date_to|date:"Y-m-d" }}"
+                           onchange="refresh_data()"></th>
+                <th>Разница в %</th>
+                <th>Разница</th>
+                </thead>
+            </table>
+            {{ statistics|safe }}
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Товары, которые выросли в продажах</h5>
+            <table class="table table-bordered table-sm">
+                <thead class="alert-success">
+                <th>Название товара</th>
+                <th>Изменение количества продаж</th>
+                <th>Изменение оборота</th>
+                </thead>
+            </table>
+            <div class="pre-scrollable">
+                {{ increase|safe }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h5>Товары, которые упали в продажах</h5>
+            <table class="table table-bordered table-sm">
+                <thead class="alert-danger">
+                <th>Название товара</th>
+                <th>Изменение количества продаж</th>
+                <th>Изменение оборота</th>
+                </thead>
+            </table>
+            <div class="pre-scrollable">
+                {{ decrease|safe }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

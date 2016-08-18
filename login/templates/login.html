@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block login %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <form class="form-signin" method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <h5 class="form-signin-heading m-t-3">Пожалуйста войдите в систему</h5>
+            <label for="username" class="sr-only">Логин</label>
+            <input type="email" id="username" name="username" class="form-control" placeholder="Логин" required autofocus>
+            <label for="password" class="sr-only">Пароль</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required>
+            {% if login_error %}
+                <label class="err">{{ login_error }}</label>
+            {% endif %}
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
