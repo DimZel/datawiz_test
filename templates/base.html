@@ -13,12 +13,18 @@
 <body>
     <!-- Navbar -->
     <div class="navbar navbar-light bg-faded navbar-fixed-top">
-        {% block userdata %}{% endblock %}
+{#        {% block userdata %}{% endblock %}#}
+        {% if client %}
+        {% include 'userdata.html' %}
+        {% endif %}
     </div>
     <!-- Main content -->
     <div class="container">
         {% block login %}{% endblock %}
-        {% block data %}{% endblock %}
+        {% if statistics %}
+        {% include 'data.html' %}
+        {% endif %}
+{#        {% block data %}{% endblock %}#}
     </div>
     <!-- Footer -->
     <div class="footer">

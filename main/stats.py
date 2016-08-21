@@ -1,5 +1,6 @@
 import pandas as pd
 from datetime import timedelta
+from multiprocessing import Pool
 
 
 class Statistics:
@@ -9,23 +10,29 @@ class Statistics:
         self.date_from = date_from if date_from else self.client['date_from'] + timedelta(days=1)
         self.date_to = date_to if date_to else self.client['date_to']
 
-    def get_data(self, date, by):
-        shops = self.client['shops'].keys()
-        data = self.dw.get_products_sale(
-            shops=shops, by=by,
-            date_from=date,
-            date_to=date).T
-        return data
-
     def receive_data(self):
-        self.products1_turnover = self.get_data(self.date_from, 'turnover')
-        self.products2_turnover = self.get_data(self.date_to, 'turnover')
+        pool = Pool(6)
+        shops = self.client['shops'].keys()
+        args = [
+            (self.dw, shops, self.date_from, 'turnover'),
+            (self.dw, shops, self.date_to, 'turnover'),
+            (self.dw, shops, self.date_from, 'qty'),
+            (self.dw, shops, self.date_to, 'qty'),
+            (self.dw, shops, self.date_from, 'receipts_qty'),
+            (self.dw, shops, self.date_to, 'receipts_qty'),
+        ]
 
-        self.products1_qty = self.get_data(self.date_from, 'qty')
-        self.products2_qty = self.get_data(self.date_to, 'qty')
+        res = pool.map(get_data, args)
 
-        self.products1_receipts_qty = self.get_data(self.date_from, 'receipts_qty')
-        self.products2_receipts_qty = self.get_data(self.date_to, 'receipts_qty')
+        (self.products1_turnover,
+         self.products2_turnover,
+         self.products1_qty,
+         self.products2_qty,
+         self.products1_receipts_qty,
+         self.products2_receipts_qty) = res
+
+        pool.close()
+        pool.join()
 
     def get_statistics(self):
         turnover1 = float(self.products1_turnover.sum())
@@ -71,3 +78,12 @@ class Statistics:
 
     def get_decrease_products(self):
         return self.difference[self.difference['turnover_diff'] < 0]
+
+
+def get_data(args):
+    dw, shops, date, by = args
+    data = dw.get_products_sale(
+        shops=shops, by=by,
+        date_from=date,
+        date_to=date).T
+    return data

@@ -6,7 +6,7 @@ function refresh_data() {
     var date_to = $('#date_to').val();
     if (date_from && date_to) {
         $('#refreshing_msg').show()
-        $.get('/', {date_from: date_from, date_to: date_to}, function (data) {
+        $.get('/refresh/', {date_from: date_from, date_to: date_to}, function (data) {
             $('#data').html(data);
         });
     }

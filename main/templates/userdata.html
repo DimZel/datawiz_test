@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <b>{{ client.name }}</b>
+        </div>
+        <div class="col-md-3">
+            Дата первого чека: {{ client.date_from|date }}
+        </div>
+        <div class="col-md-3">
+            Дата последнего чека: {{ client.date_to|date }}
+        </div>
+        <div class="col-md-3 text-warning" id="refreshing_msg" style="display: none">
+            Обновляется...
+        </div>
+        <a class="btn btn-secondary pull-md-right" href="{% url 'logout' %}">
+            Выйти
+        </a>
+    </div>
+</div>
